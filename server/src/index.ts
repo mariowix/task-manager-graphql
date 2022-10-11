@@ -1,9 +1,32 @@
 import * as dotenv from 'dotenv'
 dotenv.config();
 
+import express from 'express';
 import { AppDataSource } from "./data-source"
-//import { User } from "./entity/User"
+import { ApolloServer } from 'apollo-server-express';
+import { buildSchema } from 'type-graphql';
+import UserResolver from './resolvers/UserResolver';
 
-AppDataSource.initialize().then(async () => {
+const main = async () => {
+  await AppDataSource.initialize()
+  const app = express();
 
-}).catch(error => console.log(error))
+  const server = new ApolloServer({
+    schema: await buildSchema({
+      resolvers: [UserResolver]
+    })
+  });
+
+  await server.start()
+
+
+  app.listen(4000, () => {
+    console.log('server linstening on port 4000');
+  });
+
+  server.applyMiddleware({ app });
+
+}
+
+main();
+
