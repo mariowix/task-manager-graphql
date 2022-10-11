@@ -8,8 +8,14 @@ interface Options {
 
 export class TaskApiHelper {
   private schema: GraphQLSchema;
-  private req: any = {};
-  private res: any = {};
+  private req: any = {
+    fingerprint: {
+      hash: 'dummy'
+    }
+  };
+  private res: any = {
+    cookie: () => { }
+  };
 
   private async _gCall({ source, variableValues }: Options) {
     if (!this.schema) {
@@ -41,6 +47,23 @@ export class TaskApiHelper {
           email,
           password
         }
+      }
+    })
+  }
+
+  private loginMutation = `
+  mutation($password: String!, $email: String!) {
+    login(password: $password, email: $email) {
+      accessToken
+    }
+  }`
+
+  login(email: string, password: string) {
+    return this._gCall({
+      source: this.loginMutation,
+      variableValues: {
+        email,
+        password
       }
     })
   }
