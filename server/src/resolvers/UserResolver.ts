@@ -1,13 +1,24 @@
 import { User } from "@entities";
-import { Arg, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, Field, InputType, Mutation, Query, Resolver } from "type-graphql";
+
+@InputType()
+class SignupInput {
+  @Field()
+  name: string
+
+  @Field()
+  password: string
+
+  @Field()
+  email: string
+
+}
 
 @Resolver()
 export default class UserResolver {
   @Mutation(() => User)
   async signup(
-    @Arg("name") name: string,
-    @Arg("email") email: string,
-    @Arg("password") password: string,
+    @Arg("newUser") { name, email, password }: SignupInput
   ) {
     //TODO: add validation
 
