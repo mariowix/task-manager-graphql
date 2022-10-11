@@ -1,6 +1,7 @@
 import UserResolver from './UserResolver';
-
+import TaskResolver from './TaskResolver';
 
 export {
-  UserResolver
+  UserResolver,
+  TaskResolver
 }
