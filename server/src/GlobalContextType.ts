@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import { User } from '@entities';
+import { User, Task } from '@entities';
 
 export interface GlobalContextType {
-  req: Request & { fingerprint: any },
+  req: Request & { task: Task, fingerprint: any },
   res: Response,
   user?: User
 }
