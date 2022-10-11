@@ -105,3 +105,4 @@ dist
 
 # Build
 server/build
+server/database-test.sqlite
