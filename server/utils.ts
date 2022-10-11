@@ -1,8 +1,8 @@
 import { buildSchema } from "type-graphql"
-import { UserResolver } from "./src/resolvers";
+import { UserResolver, TaskResolver } from "./src/resolvers";
 
 export const createSchema = () => {
   return buildSchema({
-    resolvers: [UserResolver]
+    resolvers: [UserResolver, TaskResolver]
   })
 }
