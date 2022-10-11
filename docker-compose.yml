@@ -1,0 +1,29 @@
+version: '3.3'
+services:
+  # Add postgres container
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 2a101DcMv/hyMIooiqHRXdmtD.
+      POSTGRES_USER: "mariomix"
+      POSTGRES_DB: tasks-manager
+
+  #Task API container
+  task-api:
+    image: task-api:latest
+    links:
+      - db
+    ports:
+      - 4000:4000
+    environment:
+      DB_HOST: db
+      DB_USER: mariomix
+      DB_PASS: 2a101DcMv/hyMIooiqHRXdmtD.
+    depends_on:
+      - db
+    restart: always
+    # Create volumes so I can develop using the container
+    volumes:
+      - /taskAPI/node_modules
+      - ./server:/taskAPI
