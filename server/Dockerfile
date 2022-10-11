@@ -8,6 +8,7 @@ WORKDIR /taskAPI
 COPY . /taskAPI
 
 RUN yarn install
+RUN yarn global add nodemon
 RUN yarn run build
 
 EXPOSE 4000
