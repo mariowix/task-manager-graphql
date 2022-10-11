@@ -30,6 +30,36 @@ describe("User Resolver test", () => {
       expect(response.errors).toBeFalsy();
     });
 
+    it("should fail if the email is invalid", async () => {
+      const response = await taskAPI.createUser(name, "email.com", password);
+
+      expect(response).toBeTruthy();
+      expect(response.data).toBeFalsy();
+      expect(response.errors).toBeTruthy();
+
+      expect(response.errors?.[0]?.message).toEqual("newUser.email must be a valid email")
+    });
+
+    it("should fail if the password is invalid", async () => {
+      const response = await taskAPI.createUser(name, email, "");
+
+      expect(response).toBeTruthy();
+      expect(response.data).toBeFalsy();
+      expect(response.errors).toBeTruthy();
+
+      expect(response.errors?.[0]?.message).toEqual("newUser.password is a required field")
+    });
+
+    it("should fail if the name is invalid", async () => {
+      const response = await taskAPI.createUser("", email, password);
+
+      expect(response).toBeTruthy();
+      expect(response.data).toBeFalsy();
+      expect(response.errors).toBeTruthy();
+
+      expect(response.errors?.[0]?.message).toEqual("newUser.name is a required field")
+    });
+
     it("should return an error if the user already exists", async () => {
       const response = await taskAPI.createUser(name, email, password);
 
@@ -57,6 +87,26 @@ describe("User Resolver test", () => {
       expect(response.data).toBeFalsy();
       expect(response.errors).toBeTruthy();
       expect(response.errors?.[0]?.message).toEqual("Email or password invalid")
+    });
+
+    it("should fail if the email is invalid", async () => {
+      const response = await taskAPI.login("email.com", password);
+
+      expect(response).toBeTruthy();
+      expect(response.data).toBeFalsy();
+      expect(response.errors).toBeTruthy();
+
+      expect(response.errors?.[0]?.message).toEqual("email must be a valid email")
+    });
+
+    it("should fail if the password is invalid", async () => {
+      const response = await taskAPI.login(email, "");
+
+      expect(response).toBeTruthy();
+      expect(response.data).toBeFalsy();
+      expect(response.errors).toBeTruthy();
+
+      expect(response.errors?.[0]?.message).toEqual("password is a required field")
     });
   });
 });
