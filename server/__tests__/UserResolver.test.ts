@@ -42,12 +42,21 @@ describe("User Resolver test", () => {
   });
 
   describe("Login", () => {
-    it("should login successfully", () => {
+    it("should login successfully", async () => {
+      const response = await taskAPI.login(email, password);
 
+      expect(response).toBeTruthy();
+      expect(response.data).toBeTruthy();
+      expect(response.errors).toBeFalsy();
     });
 
-    it("should return an error if the user or password is incorrect", () => {
+    it("should return an error if the user or password is incorrect", async () => {
+      const response = await taskAPI.login(email, 'wrong pass');
 
+      expect(response).toBeTruthy();
+      expect(response.data).toBeFalsy();
+      expect(response.errors).toBeTruthy();
+      expect(response.errors?.[0]?.message).toEqual("Email or password invalid")
     });
   });
 });
