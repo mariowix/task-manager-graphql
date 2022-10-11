@@ -31,3 +31,6 @@ This is a repository that contains an API to manage tasks.
 
   4.- Run `yarn run start`
 
+## Run tests
+
+For run the tests, make sure to install the dependencies first, then run `yarn run test`
