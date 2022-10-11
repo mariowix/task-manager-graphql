@@ -1,5 +1,7 @@
 import { User } from './User';
+import { Task } from './Task';
 
 export {
-  User
+  User,
+  Task
 }
