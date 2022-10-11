@@ -9,6 +9,9 @@ import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
 import { UserResolver } from '@resolvers';
 
+/* Wrap everything into a main function with async capabilities
+   to use "await"
+ */
 const main = async () => {
   await AppDataSource.initialize()
   const app = express();
@@ -31,4 +34,3 @@ const main = async () => {
 }
 
 main();
-
