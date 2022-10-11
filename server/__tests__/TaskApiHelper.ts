@@ -83,6 +83,7 @@ export class TaskApiHelper {
   mutation($description: String!, $title: String!) {
     createTask(description: $description, title: $title) {
       title,
+      description,
       id,
       status
     }

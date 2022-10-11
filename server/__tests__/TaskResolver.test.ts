@@ -15,6 +15,7 @@ const secondEmail = "mariomix2@gmail.com";
 
 const taskTitle = "Learn graphql";
 const taskDescription = "Should learn graphql because lorem ipsum";
+const taskStatus = "todo";
 
 const newTitle = "Learn API REST";
 const newDescription = "hacked";
@@ -47,6 +48,26 @@ describe("Task Resolver test", () => {
       expect(response.errors).toBeTruthy();
 
       expect(response.errors?.[0]?.message).toEqual("No token provided")
+    });
+
+    it("should create the task even if the description is invalid", async () => {
+      taskAPI.setToken(accessToken);
+      const response = await taskAPI.createTask(taskTitle, "");
+
+      expect(response).toBeTruthy();
+      expect(response.data).toBeTruthy();
+      expect(response.errors).toBeFalsy();
+    });
+
+    it("should fail if the title is invalid", async () => {
+      taskAPI.setToken(accessToken);
+      const response = await taskAPI.createTask("", "");
+
+      expect(response).toBeTruthy();
+      expect(response.data).toBeFalsy();
+      expect(response.errors).toBeTruthy();
+
+      expect(response.errors?.[0]?.message).toEqual("title is a required field")
     });
 
     it("should create a task if the user is authenticated", async () => {
@@ -85,6 +106,22 @@ describe("Task Resolver test", () => {
       expect(response.errors).toBeTruthy();
 
       expect(response.errors?.[0]?.message).toEqual("There is no task with such id for this user")
+    });
+
+    it("should update the task even if no new values are provided", async () => {
+      taskAPI.setToken(accessToken);
+      const { data: { createTask: { id } } }: any = await taskAPI.createTask(taskTitle, taskDescription);
+
+      const response = await taskAPI.updateTask(id);
+
+      expect(response).toBeTruthy();
+      expect(response.data).toBeTruthy();
+      expect(response.errors).toBeFalsy();
+
+      expect(response.data!.updateTask.id).toEqual(id);
+      expect(response.data!.updateTask.title).toEqual(taskTitle);
+      expect(response.data!.updateTask.description).toEqual(taskDescription);
+      expect(response.data!.updateTask.status).toEqual(taskStatus);
     });
 
     it("should update a task if the user is authorized", async () => {
