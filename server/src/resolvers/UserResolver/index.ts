@@ -1,10 +1,12 @@
-import { Arg, Ctx, Field, InputType, Mutation, ObjectType, Query, Resolver } from "type-graphql";
+import { Arg, Ctx, Field, InputType, Mutation, ObjectType, Query, Resolver, UseMiddleware } from "type-graphql";
 import { hash, genSaltSync, compare } from 'bcryptjs';
 import { AuthenticationError } from "apollo-server-express";
 import { sign } from 'jsonwebtoken';
 
 import { User } from "@entities";
-import { GlobalContextType } from "../GlobalContextType";
+import { GlobalContextType } from "../../GlobalContextType";
+import { ValidateInputs } from "@middlewares";
+import { LoginSchema, SignUpSchema } from './validationSchemas';
 
 /**
  * Input type for signing up new users
@@ -39,6 +41,7 @@ export default class UserResolver {
    * @param {string} newUser.password - The new user password
    * @returns {Promise<User>} - The new user created
    */
+  @UseMiddleware(ValidateInputs(SignUpSchema))
   @Mutation(() => User)
   async signup(
     @Arg("newUser")
@@ -65,6 +68,7 @@ export default class UserResolver {
   * @param {string} password - The password of the user.
   * @returns {Promise<LoginResponse>} - The response containing an accessToken
   */
+  @UseMiddleware(ValidateInputs(LoginSchema))
   @Mutation(() => LoginResponse)
   async login(
     @Arg("email")
