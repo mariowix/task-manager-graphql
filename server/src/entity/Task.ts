@@ -1,12 +1,6 @@
 import { Field, Int, ObjectType } from "type-graphql";
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-
-enum TASK_STATUSES {
-  TO_DO = "todo",
-  IN_PROGRESS = "in-progress",
-  DONE = "done",
-  ARCHIVED = "archived"
-}
+import { TASK_STATUSES } from '../constants';
 
 @Entity('task')
   @ObjectType()
