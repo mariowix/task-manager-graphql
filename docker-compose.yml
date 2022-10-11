@@ -20,6 +20,8 @@ services:
       DB_HOST: db
       DB_USER: mariomix
       DB_PASS: 2a101DcMv/hyMIooiqHRXdmtD.
+      ACCESS_TOKEN_SECRET: 2a10uMh.EOsPdIbuGXLeVp5F6e
+      REFRESH_TOKEN_SECRET: 5a8pQ0ly84k5QwkyGgFquLqpJ6tI5bm5mNoqShTx9du
     depends_on:
       - db
     restart: always
