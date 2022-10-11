@@ -1,11 +1,13 @@
+
 import * as dotenv from 'dotenv'
 dotenv.config();
+import 'module-alias/register';
 
 import express from 'express';
 import { AppDataSource } from "./data-source"
 import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
-import UserResolver from './resolvers/UserResolver';
+import { UserResolver } from '@resolvers';
 
 const main = async () => {
   await AppDataSource.initialize()
