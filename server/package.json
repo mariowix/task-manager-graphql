@@ -31,10 +31,13 @@
   "scripts": {
     "start": "nodemon --exec ts-node src/index.ts",
     "typeorm": "typeorm-ts-node-commonjs",
-    "build": "tsc -p ."
+    "build": "tsc -p .",
+    "test": "jest --config=jest.config.js --runInBand __tests__/*.test.ts "
   },
   "_moduleAliases": {
     "@resolvers": "src/resolvers",
-    "@entities": "src/entity"
+    "@middlewares": "src/middlewares",
+    "@entities": "src/entity",
+    "@types": "src/types.ts"
   }
 }
